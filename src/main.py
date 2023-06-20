@@ -9,6 +9,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--table_name", default="datasets.openfood")
     parser.add_argument("--columns_json_path", default="config/columns.json")
+    parser.add_argument("--save_path", default="models/kmeans.model")
     parser.add_argument("--k", default=2, type=int)
     parser.add_argument("--max_iter", default=8, type=int)
     parser.add_argument("--distance_measure", default="euclidean")
@@ -18,7 +19,7 @@ if __name__ == "__main__":
     parser.add_argument("--driver_memory", default="8g"),
     parser.add_argument("--executor_memory", default="16g"),
     parser.add_argument("--clickhouse_jdbc_path", default="jars/clickhouse-jdbc-0.4.6-all.jar")
-    parser.add_argument("--datamart-jar-path", default="datamart/target/scala-2.13/datamart_2.13-0.1.0-SNAPSHOT.jar")
+    parser.add_argument("--datamart_jar_path", default="jars/datamart.jar")
     args = parser.parse_args()
 
     print("Initializing SparkSession...")
@@ -33,7 +34,6 @@ if __name__ == "__main__":
         .getOrCreate()
 
     print("Loading data...")
-
     datamart = DataMart(spark=app)
     df = datamart.load_dataset()
 
