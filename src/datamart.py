@@ -5,7 +5,7 @@ class DataMart:
     def __init__(self, spark: SparkSession):
         self.spark_context = spark.sparkContext
         self.sql_context = SQLContext(self.spark_context, spark)
-        self.jwm_datamart = self.spark_context._jvm
+        self.jwm_datamart = self.spark_context._jvm.DataMart
 
     def load_dataset(self) -> DataFrame:
         jvm_data = self.jwm_datamart.readTransformOpenFoodDataset()
