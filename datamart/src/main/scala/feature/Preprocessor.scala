@@ -24,7 +24,7 @@ object Preprocessor {
   def scale(df: DataFrame): DataFrame = {
     val scaler = new MinMaxScaler()
       .setInputCol("vectorFeatures")
-      .setInputCol("features")
+      .setOutputCol("features")
     val model = scaler.fit(df)
     model.transform(df)
   }
