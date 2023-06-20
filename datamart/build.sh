@@ -1,0 +1,1 @@
+sbt clean && sbt package && cp target/scala-2.13/datamart_2.13-0.1.0-SNAPSHOT.jar ../jars/datamart.jar

@@ -1,0 +1,1 @@
+cd datamart && bash build.sh

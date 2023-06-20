@@ -11,14 +11,12 @@ object DataMart {
   private val OPEN_FOOD_PREDICTIONS_TABLE = "datasets.openfood_predictions"
 
   private def readOpenFoodDataset(): DataFrame = {
-    implicit val spark: SparkSession = SparkSession.builder.getOrCreate()
-    val reader = Reader(CLICKHOUSE_URL, USER, PASSWORD, DRIVER, OPEN_FOOD_TABLE)
-    reader.read(spark)
+    val session = SparkSession.builder.getOrCreate()
+    Reader(CLICKHOUSE_URL, USER, PASSWORD, DRIVER, OPEN_FOOD_TABLE).read(session)
   }
 
   def readTransformOpenFoodDataset(): DataFrame = {
-    val rawDataset = readOpenFoodDataset()
-
+    val data = readOpenFoodDataset()
     val transforms: Seq[DataFrame => DataFrame] = Seq(
       Preprocessor.toFloat,
       Preprocessor.fillNull,
@@ -26,13 +24,11 @@ object DataMart {
       Preprocessor.scale
     )
 
-    val transformed = transforms.foldLeft(rawDataset) { (df, f) => f(df) }
-
+    val transformed = transforms.foldLeft(data) { (df, f) => f(df) }
     transformed
   }
 
   def writeClickhouse(df: DataFrame): Unit = {
-    val writer = Writer(CLICKHOUSE_URL, USER, PASSWORD, DRIVER, OPEN_FOOD_PREDICTIONS_TABLE)
-    writer.write(df)
+    Writer(CLICKHOUSE_URL, USER, PASSWORD, DRIVER, OPEN_FOOD_PREDICTIONS_TABLE).write(df)
   }
 }

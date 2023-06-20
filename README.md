@@ -21,10 +21,11 @@ First you need to install [sbt](https://www.scala-sbt.org/) package manager.
 Build project using following command:
 
 ```shell
-cd datamart && sbt assembly
+bash scripts/build_datamart.sh
 ```
 
 Jar file will be placed in `datamart/target/<scala_version>/datamart_<scala_version>-0.1.0-SHAPSHOT.jar`
+Also this file should be placed in `jars` directory.
 
 ### Example usage
 
@@ -36,6 +37,5 @@ docker-compose up
 
 * [K-Means Spark](src/kmeans.py)
 * [Preprocessing](src/datamart.py)
-* [Clickhouse](src/clickhouse.py)
 * [Launching](src/main.py)
 * [Clickhouse and PySpark integration](docker-compose.yml)
